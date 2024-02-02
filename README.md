@@ -1,2 +1,2 @@
-# ML_Project
-Project highlighting the use of a neural network for visualizing and predictive analtics  
+# Machine Learning Project
+Project highlighting the use of a neural network and other machine learning techniques for visualizing and predictive analitics 
