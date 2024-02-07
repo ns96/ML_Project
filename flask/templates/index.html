@@ -28,7 +28,7 @@
 <body>
 
 <div class="container-fluid p-5 bg-primary text-white text-center">
-  <h1>Solar Power Cost Estimator</h1>
+  <h1>Residential Solar Cost Estimator</h1>
   <p>Version: {{version}} || Dataset Version: {{year}}</p> 
 </div>
   
@@ -90,11 +90,8 @@
 <div class="container mt-5">
   <div class="row">  
     <div class="col-sm-3">      
-      <label for="county_option" class="form-label">COUNTY:</label>
-      <select id="county_option" name="county_option">
-        <option value="1">County 1</option>
-        <option value="2">County 2</option>
-      </select>  
+      <label for="zip_input" class="col-sm-2 col-form-label">ZIPCODE:</label>
+      <input type="text" class="form-control-plaintext" id="zip_input" value="92130">
     </div>
     
     <div class="col-sm-3">      
@@ -102,10 +99,15 @@
       <select id="house_option" name="house_option">
         <option value="0">N/A</option>
         <option value="500">500</option>
-        <option value="750">750</option>
         <option value="1000">1000</option>
-        <option value="1250">1250</option>
         <option value="1500">1500</option>
+        <option value="2000">2000</option>
+        <option value="2500">2500</option>
+        <option value="3000">3000</option>
+        <option value="3500">3500</option>
+        <option value="4000">4000</option>
+        <option value="4500">4500</option>
+        <option value="5000">5000</option>
       </select>  
     </div>
     
@@ -140,7 +142,7 @@
   
   <div class="row"> 
     <div class="col-sm-8">
-      <button class="btn btn-success" value="update_map">Get Estimates</button> 
+      <button class="btn btn-success" value="get_estimate">Get Estimates</button> 
       <!--<button class="btn btn-success" value="plot_data">Show Plots</button> -->  
     </div>  
   </div>
@@ -148,21 +150,21 @@
 
 <div class="container mt-5">
   <div class="row">
-    <div class="col-sm-8"> 
-      <div class="alert alert-info" id="drg">
-        DRG Difinition
+    <div class="col-sm-6"> 
+      <div class="alert alert-info" id="estimate_info">
+        101 Estimates Calculated
       </div>  
     </div>  
     
-    <div class="col-sm-2">
+    <div class="col-sm-3">
       <div class="alert alert-success" id="lowest">
-        <strong>Lowest Cost: LL</strong>
+        <strong>Lowest Cost: $5,000</strong>
       </div> 
     </div> 
     
-    <div class="col-sm-2"> 
+    <div class="col-sm-3"> 
     <div class="alert alert-danger" id="highest">
-      <strong>Higest Cost: HH</strong>
+      <strong>Higest Cost: $6,500</strong>
     </div> 
     </div>     
   </div>
