@@ -168,7 +168,6 @@ cython_debug/
 # Folders with data
 data_files/
 extracted_files/
-clean_data/
 database/
 
 >>>>>>> 0d409a13da00ce63e6c6da7a05fa5d5f6b546fb9
