@@ -16,11 +16,11 @@ from flask_cors import CORS
 #################################################
 
 # The SQlite engine
-db_file = '/Users/ns96/Documents/ML_Project/SolarCostData.sqlite3'
-engine = create_engine("sqlite:///" + db_file)
+#db_file = '/Users/ns96/Documents/ML_Project/SolarCostData.sqlite3'
+#engine = create_engine("sqlite:///" + db_file)
 
 # RECOMMENDED
-#engine = create_engine('postgresql+psycopg2://ns96:java100@localhost/SolarCost')
+engine = create_engine('postgresql+psycopg2://ns96:java100@localhost/SolarCostData')
 
 # make sure we can connect to the database, otherwise exit
 try:
