@@ -89,7 +89,7 @@ def cost_by_utilities():
 @app.route("/api/v1.0/installers")
 def cost_by_installers():
     """ 
-    Return the avergage install cost by installers
+    Return the average install cost by installers
     """
     query = text('SELECT "Category", COUNT(*) '\
                  'FROM "DRG" '\
@@ -108,7 +108,7 @@ def cost_by_installers():
 @app.route("/api/v1.0/cities")
 def cost_by_cities():
     """ 
-    Return the avergage install cost by cities
+    Return the average install cost by cities
     """
     query = text("")
     print(query)
@@ -127,7 +127,7 @@ def cost_by_cities():
 @app.route("/api/v1.0/zipcodes")
 def cost_by_zipcodes():
     """ 
-    Return the avergage install cost by zipcodes
+    Return the average install cost by zipcodes
     """
     query = text("")
     print(query)
@@ -146,7 +146,7 @@ def cost_by_zipcodes():
 @app.route("/api/v1.0/city/<city>")
 def cost_for_city(city):
     """ 
-    Return the avergage install cost for a particular city
+    Return the average install cost for a particular city
     """
     query = text("")
     print(query)
@@ -165,7 +165,7 @@ def cost_for_city(city):
 @app.route("/api/v1.0/zipcode/<zipcode>")
 def cost_for_zipcode(zipcode):
     """
-    Return the avergage install cost for a particular zipcode
+    Return the average install cost for a particular zipcode
     """
     query = text('')
     
@@ -201,33 +201,20 @@ def get_estimate(zipcode, kwh, technology):
     """
     Return an estimate given the zipcode. desired, kwh and technology
     """
-    query = text('')
+    query = text('SELECT COUNT(*) FROM "CA"')
     print(query)
     
     with engine.connect() as conn:
       results = conn.execute(query).fetchall()
     
-    providers = []
+    estimates = []
     for row in results:
-      provider = dict()
+      estimate = dict()
       
-      provider["state"] = row[0]
-      provider["name"] = row[1]
-      provider["drg"] = row[2]
-      provider["discharges"] = row[3]
-      provider["avg_payments"] = int(row[4])
-      provider["avg_medicare"] = int(row[5])
-      provider["avg_difference"] = int(row[4] - row[5])
-      
-      # calcuate the percent medicare payments
-      pct = int((row[5]/row[4])*100)
-      provider["pct_medicare"] = pct
-      provider["latitude"] = row[6]
-      provider["longitude"] = row[7]
-      
-      providers.append(provider)
+      estimate["cost"] = row[0]
+      estimates.append(estimate)
     
-    return jsonify(providers)
+    return jsonify(estimates)
 
 @app.route("/view")
 def view_ui():
