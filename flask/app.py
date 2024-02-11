@@ -52,7 +52,7 @@ def welcome():
         f"<b>/api/v1.0/zipcodes</b> [ get average install cost by zipcodes ]<br/>"
         f"<b>/api/v1.0/city/&lt;city&gt</b> [ get average install cost for a city ]<br/>"
         f"<b>/api/v1.0/zipcode/&lt;zipcode&gt</b> [ get average install cost for zip code ]<br/>"
-        f"<b>/api/v1.0/estimate/&lt;zipcode&gt;/&lt;kwh&gt;/&lt;technology&gt; </b>[ get cost estimate by zip code and KWh ]<br/><br/>"
+        f"<b>/api/v1.0/estimate/&lt;zipcode&gt;/&lt;kw&gt;/&lt;ecar&gt; </b>[ get cost estimate by zipcode, kw, ecar ]<br/><br/>"
         f"<b>/view </b>[ <a href='/view'> view the basic web UI </a>]<br/>"
     )
 
@@ -196,8 +196,8 @@ def cost_for_zipcode(zipcode):
     
     return jsonify(providers)
   
-@app.route("/api/v1.0/estimate/<zipcode>/<kwh>/<technology>")
-def get_estimate(zipcode, kwh, technology):
+@app.route("/api/v1.0/estimate/<zipcode>/<kw>/<ecar>")
+def get_estimate(zipcode, kw, ecar):
     """
     Return an estimate given the zipcode. desired, kwh and technology
     """
