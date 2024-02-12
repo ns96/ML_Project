@@ -61,28 +61,21 @@ def cost_by_utilities():
     """
     Return the avergage install cost by utilities
     """
-    query = text('')
+    query = text('SELECT "Utility", AVG("Total_System_Cost") '\
+                 'FROM "CA" GROUP BY "Utility"')
     print(query)
     
     with engine.connect() as conn:
       results = conn.execute(query).fetchall()
     
-    records = dict()
+    records = list()
     
     for row in results:
       record = dict()
-      record["state"] = row[0]
-      record["count"] = row[1]
-      record["discharges"] = row[2]
-      record["avg_payments"] = int(row[3])
-      record["avg_medicare"] = int(row[4])
-      record["avg_difference"] = int(row[3] - row[4])
+      record["utility"] = row[0]
+      record["avg_cost"] = int(row[1])
       
-      # calcuate the percent medicare payments
-      pct = int((row[4]/row[3])*100)
-      record["pct_medicare"] = pct
-      
-      records[row[0]] = record # add to dictionary
+      records.append(record)
     
     return jsonify(records)
 
