@@ -22,11 +22,11 @@ import pickle
 #################################################
 
 # The SQlite engine
-#db_file = '/Users/ns96/Documents/ML_Project/SolarCostData.sqlite3'
-#engine = create_engine("sqlite:///" + db_file)
+db_file = '/Users/ns96/Documents/ML_Project/SolarCostData.sqlite3'
+engine = create_engine("sqlite:///" + db_file)
 
 # RECOMMENDED
-engine = create_engine('postgresql+psycopg2://ns96:java100@localhost/SolarCostData')
+#engine = create_engine('postgresql+psycopg2://ns96:java100@localhost/SolarCostData')
 
 # make sure we can connect to the database, otherwise exit
 try:
@@ -46,6 +46,14 @@ models = dict()
 # a lookup table containing the most common generator manufacturer
 # used by a installer
 generator_table = dict()
+
+# store table which has the three most populat city per zip code
+# by utilty
+top_zipcodes = {
+  'SDGE': ['92130', '92028', '91913'], # san diago, fallbrook, chula vista
+  'PGE': ['95648','93727','93311'], # lincoln, fresno, bakersfield
+  'SCE': ['92336', '92584', '92223'] # fontana, manifee, BEAUMONT
+}
 
 def load_models():
   """
@@ -170,6 +178,8 @@ def make_predictions(zipcode, kw, ecar):
   and if there is an electrical care
   """
   
+  #print("KW", kw)
+  
   # store the data to make predictions on
   pred_data = {
     'Service_City': [],
@@ -192,7 +202,7 @@ def make_predictions(zipcode, kw, ecar):
     'Avg_Size_AC': [],
     'Avg_Cost': [],
     'My_Size_AC': [],
-    'ECar': [],
+    'eCar': [],
     'Est_Cost': []
   }
     
@@ -210,19 +220,19 @@ def make_predictions(zipcode, kw, ecar):
     estimate_data['Avg_Size_AC'].append(installer[3])
     estimate_data['Avg_Cost'].append(int(installer[4]))
     estimate_data['My_Size_AC'].append(kw)
-    estimate_data['ECar'].append(ecar)
+    estimate_data['eCar'].append(ecar)
         
     # populate the dictionary with information for making predictions
     pred_data['Service_City'].append(installer[0])
     pred_data['Technology_Type'].append('Solar')
-    pred_data['System_Size_AC'].append(kw)
+    pred_data['System_Size_AC'].append(float(kw))
     pred_data['Storage_Size_kW_AC'].append(0)
     pred_data['Mounting_Method'].append('Rooftop')
     pred_data['Installer_Name'].append(installer[1])
     pred_data['Third_Party_Owned'].append('No')
     pred_data['Electric_Vehicle'].append(ecar)
     pred_data['Generator_Manufacturer'].append(generator_info[0]) # the most common generator used by installer
-    pred_data['Generator_Quantity'].append(generator_info[2]) # the average number of the above generator used
+    pred_data['Generator_Quantity'].append(int(generator_info[2])) # the average number of the above generator used
 
   # now return the estimates and append to the dictionary so it can 
   # be turned info a dataframe
@@ -231,6 +241,27 @@ def make_predictions(zipcode, kw, ecar):
 
   return estimate_data
 
+def make_predictions_all(kw, ecar):
+  """
+  Make predictions for the top zipcodes for all utilites
+  """
+  estimates = []
+  
+  for key in top_zipcodes:
+    zipcode = top_zipcodes[key][0]
+    print(key, zipcode)
+    
+    city_estimates = make_predictions(zipcode, kw, ecar)
+    estimates.append(city_estimates)
+  
+  # merge the diections into one big one
+  merged1 = {key: estimates[0][key] + estimates[1][key] for key in estimates[0]}
+  merged_estimates = {key: merged1[key] + estimates[2][key] for key in merged1}
+  
+  #print(str(merged_estimates))
+  
+  return merged_estimates
+  
 #################################################
 # Flask Setup
 #################################################
@@ -359,11 +390,11 @@ def get_estimate(zipcode, kw, ecar):
     Return an estimate given the zipcode. desired, kwh and technology
     """
     if zipcode != 'all':
-      estimates = make_predictions('92130', 8.0, 'No')
+      estimates = make_predictions(zipcode, kw, ecar)
     else:
       # make three diffent prediction for three diff utilities then
       # merge dictionaries
-      estimates = dict()
+      estimates = make_predictions_all(kw, ecar)
     
     return jsonify(estimates)
 
@@ -387,7 +418,7 @@ if __name__ == '__main__':
   get_generator_table()
   
   # test making predictions
-  #estimates = make_predictions('92130', 8.0, 'No')
+  #make_predictions_all(2.8, 'No')
   #print(estimates)  
     
   app.run(debug=True, host = '0.0.0.0', port=5015, use_reloader=False)
