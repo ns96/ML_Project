@@ -408,17 +408,13 @@ def view_ui():
     year = "2018-2023"
     return render_template('index.html', version=version, year=year)
 
+# load ML scalers/models
+load_models()
+
+# create a lookup table which maps installer->generators
+get_generator_table()
+
 # start the application if it running in the console on port 5015 so localhost
 # works on newer macs
 if __name__ == '__main__':
-  # load ML scalers/models
-  load_models()
-  
-  # create a lookup table which maps installer->generators
-  get_generator_table()
-  
-  # test making predictions
-  #make_predictions_all(2.8, 'No')
-  #print(estimates)  
-    
   app.run(debug=True, host = '0.0.0.0', port=5015, use_reloader=False)
