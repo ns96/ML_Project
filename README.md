@@ -14,14 +14,13 @@ Predictive models that leverages factors like location, utility company, install
 ### Dependencies for Machine Learning Jupyter Notebooks
 1. Scikit-Learn
 2. XGBoost
-3. TF/Kera
+3. TensorFlow/Kera
 
 ### Dependencies for Flask web-app
 1. Flask
 2. Flask-CORS
 3. SQLAlchemy
 4. PostgreSQL or SQlite3
-
 
 ### Clean Dataset and Database Files
 Download here: [Solar Cost Data](https://github.com/ns96/ML_Project/releases/tag/v1.0)
@@ -42,6 +41,8 @@ Database Files Importing.
 2. Change to "installation location"/flask directory
 3. Execute "python app.py"
 4. Open http://localhost:5015/view in Browser 
+
+![Flask Web App](images/flask_app.png)
 
 ## Model Performance
 
