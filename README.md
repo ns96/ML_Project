@@ -14,7 +14,7 @@ Predictive models that leverages factors like location, utility company, install
 ### Dependencies for Machine Learning Jupyter Notebooks
 1. Scikit-Learn
 2. XGBoost
-3. TensorFlow/Kera
+3. TensorFlow/Keras
 
 ### Dependencies for Flask web-app
 1. Flask
@@ -43,6 +43,8 @@ Database Files Importing.
 4. Open http://localhost:5015/view in Browser 
 
 ![Flask Web App](images/flask_app.png)
+[Live Demo](http://pi86.sytes.net:5015/view)
+
 
 ## Model Performance
 
@@ -52,7 +54,7 @@ In order to achieve the best model performance, training was done on datasets fo
 
 ## Conclusions
 
-By making use of various machine learning techniques and the Distributed Generation  Interconnection Data Sets from California, numerous machine learning models were trained and tested. Overall, the ML models did show promise for predicting solar panel installation cost based on location, installer and desired power output. However, given the best R-squared value was only about 0.81 and the mean absolute error was above $5,000 work still remains before these models can be put into a production environment. 
+By making use of various machine learning techniques and the Distributed Generation  Interconnection Data Sets from California, numerous machine learning models were trained and tested. Overall, the ML models did show promise for predicting solar panel installation cost based on location, installer and desired power output. However, given the best R-squared value was only about 0.81, and the mean absolute error was above $5,000 work still remains before these models can be put into a production environment. 
 
 ## Authors
 
